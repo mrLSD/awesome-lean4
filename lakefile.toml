@@ -1,0 +1,15 @@
+name = "AwesomeLean4"
+version = "0.1.0"
+defaultTargets = ["exec"]
+
+[[lean_lib]]
+name = "Examples"
+
+[[lean_exe]]
+name = "exec"
+root = "Main"
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "v4.33.1"

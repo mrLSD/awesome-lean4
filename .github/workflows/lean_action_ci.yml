@@ -1,0 +1,19 @@
+name: Lean Action CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          # Build the library rather than the default target: this is what
+          # actually checks every example, theorem and lemma. The `exec` binary
+          # imports no Mathlib, so building it alone would verify nothing.
+          build-args: "Examples"
