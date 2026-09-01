@@ -3,36 +3,29 @@ import Examples.Theorems
 /-!
 # Rewriting numerals in both directions
 
-The lemmas proved in `Examples.Theorems` are equalities, and every equality is a
-rewrite rule that works both ways. This file proves one and the same goal twice
-to show the difference between the two directions of `rw`.
+Changing the direction of `rw` makes the same lemmas expand or fold numerals.
 -/
-
 namespace Examples.Succ
 
--- `MyNat` and both lemmas live in `Examples.Theorems`. `open` pulls their short
--- names into scope; without it every mention needs the full `Theorems.` prefix,
--- and a bare `MyNat` does not resolve at all.
+-- Brings `MyNat` and its numeral lemmas into scope.
 open Examples.Theorems
 
-/-- Forward direction: numerals are taken apart into `succ`s.
-
-`rw [h]` replaces the left-hand side of `h` by its right-hand side, so `2`
-becomes `succ 1` and then `1` becomes `succ 0`, until both sides of the goal
-match and the `rfl` that `rw` always tries at the end closes it. -/
+-- Expands `2` to two successors with forward rewrites.
 example : (2 : MyNat) = MyNat.succ (MyNat.succ 0) := by
+  -- `2` →[two_eq_succ_one] `MyNat.succ 1`
+  -- `⊢ MyNat.succ 1 = MyNat.succ (MyNat.succ 0)`
   rw [two_eq_succ_one]
-  -- ⊢ MyNat.succ 1 = MyNat.succ (MyNat.succ 0)
+  -- `1` →[one_eq_succ_zero] `MyNat.succ 0`
+  -- `⊢ MyNat.succ (MyNat.succ 0) = MyNat.succ (MyNat.succ 0)`
   rw [one_eq_succ_zero]
 
-/-- Reverse direction: `succ` chains are folded back into numerals.
-
-`rw [← h]` rewrites right-to-left, so the very same two lemmas apply in the
-opposite order — `succ 0` becomes `1`, then `succ 1` becomes `2` — and the goal
-ends up as `2 = 2`. Same goal, same lemmas, mirrored steps. -/
+-- Folds two successors back to `2` with reverse rewrites.
 example : (2 : MyNat) = MyNat.succ (MyNat.succ 0) := by
+  -- `MyNat.succ 0` →[← one_eq_succ_zero] `1`
+  -- `⊢ 2 = MyNat.succ 1`
   rw [← one_eq_succ_zero]
-  -- ⊢ 2 = MyNat.succ 1
+  -- `MyNat.succ 1` →[← two_eq_succ_one] `2`
+  -- `⊢ 2 = 2`
   rw [← two_eq_succ_one]
 
 end Examples.Succ
