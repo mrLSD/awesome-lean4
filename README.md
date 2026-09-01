@@ -1,3 +1,5 @@
+[![Lean Action CI](https://github.com/mrLSD/awesome-lean4/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/mrLSD/awesome-lean4/actions/workflows/lean_action_ci.yml)
+
 # Awesome Lean 4
 
 A small, self-contained playground for learning [Lean 4](https://lean-lang.org) and
@@ -112,7 +114,9 @@ module.
 │
 ├── Examples.lean         root module of the library — imports every submodule
 ├── Examples/
-│   ├── Rewrite.lean      the exercises: rw, rewrite, nth_rw, calc (imports Mathlib)
+│   ├── Rewrite.lean      rewriting tactics: rw, rewrite, nth_rw, calc (imports Mathlib)
+│   ├── Theorems.lean     the MyNat type and named lemmas, from the Natural Number Game
+│   ├── Succ.lean         those lemmas in use: rewriting numerals both ways
 │   └── Hello.lean        runtime code for the binary (deliberately no Mathlib)
 ├── Main.lean             entry point of the executable
 │
@@ -145,7 +149,8 @@ Mathlib-heavy exercises.
 **Namespaces are a separate concept from modules.** Importing a module does not qualify
 its names, so without namespaces every definition would land next to Mathlib's many
 thousands of global names. Each file therefore opens its own: `Examples`,
-`Examples.Hello`, `Examples.Rewrite`. Names are then pulled in explicitly:
+`Examples.Hello`, `Examples.Rewrite`, `Examples.Theorems`, `Examples.Succ`. Names are
+then pulled in explicitly:
 
 ```lean
 open Examples.Hello (hello)   -- the equivalent of Rust's `use Examples::Hello::hello`

@@ -1,4 +1,6 @@
 import Examples.Rewrite
+import Examples.Theorems
+import Examples.Succ
 import Examples.Hello
 
 namespace Examples
